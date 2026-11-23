@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مسار المهندس 360°</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050b1a;--card:#0b1630;--line:#1c2d55;--ink:#ffffff;--mut:#9fb0d6;--blue:#2f8cff;--cyan:#2ec9f0;--gold:#f5b942;color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 Cairo,Tahoma,sans-serif;overflow-x:clip;
+background-image:linear-gradient(rgba(46,140,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(46,140,255,.06) 1px,transparent 1px),radial-gradient(ellipse at 50% 0,#0d2552 0,transparent 60%);
+background-size:28px 28px,28px 28px,100% 100%;min-height:100vh}
+.app{max-width:440px;margin:0 auto;padding:14px 18px 22px}
+.top{display:flex;justify-content:space-between;align-items:center;direction:ltr;font:700 11px 'Space Grotesk',sans-serif;letter-spacing:.12em;color:var(--cyan)}
+.top .st{color:var(--mut);display:flex;align-items:center;gap:6px}
+.top .st i{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.ring{width:150px;height:150px;margin:26px auto 22px;position:relative}
+.ring svg{width:100%;height:100%;overflow:visible}
+.ring .arc{transform-origin:75px 75px;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{text-align:center;font-size:clamp(30px,8vw,38px);line-height:1.35;font-weight:900;margin:0 0 26px;text-wrap:balance}
+h1 span{color:var(--blue);display:block}
+.card{background:rgba(11,22,48,.85);border:1px solid var(--line);border-radius:14px;padding:16px}
+.tag{font-size:12px;color:var(--gold);font-weight:600}
+h2{font-size:24px;font-weight:900;margin:2px 0 14px;line-height:1.4}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{font-family:inherit;color:var(--ink);background:#081128;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:start;cursor:pointer;min-height:84px;transition:.25s}
+.opt:hover{border-color:var(--blue)}
+.opt[aria-pressed=true]{border-color:var(--cyan);background:#0c2148;box-shadow:0 0 0 1px var(--cyan),0 0 22px rgba(46,201,240,.25)}
+.opt svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.6}
+.opt b{display:block;font-size:17px;margin-top:4px}
+.opt small{color:var(--mut);font-size:12px}
+.opt:focus-visible,.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.ans{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.ans.on{display:block;animation:up .4s ease}
+@keyframes up{from{opacity:0;transform:translateY(6px)}}
+.ans h3{margin:0 0 6px;font-size:16px;color:var(--cyan)}
+.ans ul{margin:0;padding-inline-start:18px;color:#d4ddf3;font-size:14px}
+.about{margin-top:26px}
+.about h2{font-size:24px;margin:0 0 6px}
+.about p{color:var(--mut);margin:0 0 12px;font-size:14.5px}
+.about p b{color:#fff}
+.motto{color:var(--blue);font-weight:800;margin:0 0 12px}
+.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.chip{font:700 14.5px/1.35 Cairo,sans-serif;background:#0b1a3a;border:1px solid var(--line);color:#fff;padding:10px 6px;border-radius:10px;min-height:64px;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center}
+.chip:hover{border-color:var(--blue);transform:translateY(-1px)}
+.chip:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.pick{color:#dfe8ff!important;font-weight:600;font-size:14px!important;margin:0 0 8px!important}
+.spec{margin-bottom:14px}.spec small{display:block;color:var(--mut);font-size:12px;margin-bottom:6px}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;direction:ltr;justify-content:flex-end}.tools i{font:700 11px 'Space Grotesk',sans-serif;font-style:normal;color:var(--cyan);border:1px solid #1d4a7a;border-radius:6px;padding:3px 8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;border-radius:12px;font:800 16px Cairo,sans-serif;text-decoration:none;cursor:pointer;margin-top:12px}
+.primary{background:var(--blue);color:#fff;border:0;margin-top:24px;box-shadow:0 10px 30px rgba(47,140,255,.35)}
+.ghost{background:transparent;color:#fff;border:1px solid #3a4c78;line-height:1.25}
+.ghost svg{width:24px;height:24px;stroke:var(--cyan);fill:none;stroke-width:1.8}
+.ghost small{display:block;color:var(--cyan);font:700 12px 'Space Grotesk',sans-serif}
+.qr{display:none;margin-top:12px;text-align:center}
+.qr.on{display:block;animation:up .4s ease}
+.qr div{background:#fff;border-radius:14px;padding:12px;width:200px;margin:auto}
+.qr svg{width:100%;height:auto;display:block}
+.qr p{color:var(--mut);font-size:13px;margin:8px 0 0}
+footer{margin-top:22px;text-align:center;font:700 10px 'Space Grotesk',sans-serif;letter-spacing:.14em;color:#5f6f96}
+footer span{font-family:Cairo;letter-spacing:0;font-weight:600}
+.view{display:none}.view.on{display:block;animation:slide .45s ease}
+@keyframes slide{from{opacity:0;transform:translateX(-24px)}}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line);color:var(--mut);font:600 14px Cairo,sans-serif;border-radius:99px;padding:6px 14px;min-height:40px;cursor:pointer;margin-top:18px}
+.hero2{text-align:center;margin:22px 0 18px}
+.badge{width:96px;height:96px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#0c2148,#050b1a);border:3px solid var(--cyan);box-shadow:0 0 30px rgba(46,201,240,.35)}
+.badge svg{width:44px;height:44px;stroke:var(--gold);fill:none;stroke-width:1.6}
+.hero2 h1{margin:0 0 6px;font-size:30px}
+.hero2 p{color:var(--mut);margin:0}
+.rank{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.rank b{font-size:18px}.rank small{color:var(--mut);display:block;font-size:12px}
+.pill{font:700 12px 'Space Grotesk',sans-serif;color:#050b1a;background:var(--gold);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.bar{height:10px;border-radius:99px;background:#081128;border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:99px;transition:width 1.2s ease .3s}
+.lv{display:flex;justify-content:space-between;color:var(--mut);font-size:11px;margin-top:6px}
+.steps{list-style:none;margin:18px 0 0;padding:0}
+.steps li{position:relative;padding:0 34px 18px 0}
+.steps li::before{content:attr(data-n);position:absolute;right:0;top:2px;width:24px;height:24px;border-radius:50%;background:#0c2148;border:1px solid var(--cyan);color:var(--cyan);font:700 12px 'Space Grotesk';display:grid;place-items:center}
+.steps li:not(:last-child)::after{content:"";position:absolute;right:11.5px;top:28px;bottom:2px;width:1px;background:var(--line)}
+.steps b{display:block}.steps span{color:var(--mut);font-size:14px}
+.mask{position:fixed;inset:0;background:rgba(2,6,16,.75);backdrop-filter:blur(4px);display:none;place-items:center;padding:20px;z-index:10}
+.mask.on{display:grid}
+.modal{background:var(--card);border:1px solid var(--cyan);border-radius:18px;padding:24px 20px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 50px rgba(46,201,240,.3);animation:pop .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+.modal .em{font-size:44px;line-height:1}
+.modal h3{font-size:24px;margin:8px 0 4px;font-weight:900}
+.modal h3 span{color:var(--cyan)}
+.modal p{color:var(--mut);margin:0 0 14px;font-size:14.5px}
+.modal ul{text-align:start;margin:0 0 6px;padding:0;list-style:none;font-size:14px}
+.modal li{padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin-bottom:6px;background:#081128}
+.modal li b{color:var(--gold)}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:11;width:100%;height:100%}
+.chip em{font:600 11px/1.6 Cairo,sans-serif;font-style:normal;padding:0 8px;border-radius:99px;background:#1a2747;color:var(--mut)}
+@media(max-width:360px){.chips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pick-card{margin-bottom:14px}.pick-card h2{margin:0 0 4px;font-size:20px}.pick-card p{color:var(--mut);font-size:13.5px;margin:0 0 12px}
+.chip.live{border-color:var(--cyan)}.chip.live em{background:var(--cyan);color:#050b1a}
+.spec-hero{text-align:center;margin:20px 0 16px}
+.spec-hero .live-tag{display:inline-block;font:700 12px Cairo;background:rgba(46,201,240,.15);color:var(--cyan);border:1px solid var(--cyan);padding:2px 12px;border-radius:99px;margin-bottom:8px}
+.spec-hero h1{font-size:28px;margin:0 0 6px}.spec-hero h1 span{display:inline;font-size:20px}
+.spec-hero p{color:var(--mut);margin:0;font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.stats div{background:#081128;border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center}
+.stats b{display:block;font-size:20px;color:var(--cyan);font-family:'Space Grotesk',Cairo}.stats small{color:var(--mut);font-size:12px}
+.sec-t{font-size:18px;font-weight:900;margin:18px 0 10px}
+.mod{border:1px solid var(--line);border-radius:12px;background:#081128;margin-bottom:8px;overflow:hidden}
+.mod summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px;min-height:56px}
+.mod summary::-webkit-details-marker{display:none}
+.mod summary i{flex:none;width:30px;height:30px;border-radius:8px;background:#0c2148;border:1px solid var(--cyan);color:var(--cyan);font:700 13px 'Space Grotesk';font-style:normal;display:grid;place-items:center}
+.mod summary b{flex:1;font-size:15px}.mod summary b small{display:block;font:700 11px 'Space Grotesk';color:var(--mut);direction:ltr;text-align:right}
+.mod summary::after{content:"+";color:var(--cyan);font-size:22px;transition:.2s}
+.mod[open] summary::after{transform:rotate(45deg)}
+.mod[open]{border-color:#1d4a7a}
+.mod .in{padding:0 14px 14px 14px;color:#d4ddf3;font-size:14px}
+.mod .in p{margin:0 0 6px;color:var(--mut)}.mod .in ul{margin:0;padding-inline-start:18px}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.list li{display:flex;gap:10px;align-items:center;background:#081128;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14.5px}
+.list li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.soon .em{font-size:40px}
+.soon .bar{margin:6px 0 4px}.soon .lv{margin-bottom:12px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+ <div class="top"><span>MASAR ENGINEER 360°</span><span class="st"><i></i><span id="stt">PATH RESTORED</span></span></div>
+
+ <div class="view on" id="v-home">
+ <div class="ring" aria-hidden="true">
+  <svg viewBox="0 0 150 150">
+   <circle cx="75" cy="75" r="68" fill="#050b1a" stroke="#123a6b" stroke-width="10"/>
+   <circle class="arc" cx="75" cy="75" r="68" fill="none" stroke="#2ec9f0" stroke-width="10" stroke-linecap="round" stroke-dasharray="380 48" style="filter:drop-shadow(0 0 8px rgba(46,201,240,.6))"/>
+   <text x="75" y="88" text-anchor="middle" fill="#fff" font-family="Space Grotesk" font-weight="700" font-size="38" direction="ltr">360°</text>
+  </svg>
+ </div>
+
+ <h1>وصلت للمكان الصحيح، <span>لكن هل أنت مستعد للخطوة القادمة؟</span></h1>
+
+ <section class="card">
+  <div class="tag">سؤال سريع</div>
+  <h2>أنت طالب لو خريج؟</h2>
+  <div class="opts">
+   <button class="opt" data-k="st" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg><b>طالب</b><small>لسه أدرس</small></button>
+   <button class="opt" data-k="gr" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/></svg><b>خريج</b><small>تخرّجت وأطوّر طريقي</small></button>
+  </div>
+ </section>
+
+ <section class="about">
+  <h2>شنو هو مسار المهندس 360°؟</h2>
+  <p>منصة تدريب وتأهيل لكل التخصصات الهندسية، <b>تربط المعرفة الأكاديمية بالتطبيق العملي</b> وتجهّزك لسوق العمل.</p>
+  <p class="motto">من المعرفة إلى الاحتراف</p>
+  
+ </section>
+
+ <button class="btn primary" id="go">اكتشف مسارك الآن</button>
+
+ <a class="btn ghost" href="https://www.instagram.com/masarengineer360?gwpx=MW9uZTgxemRveWZ0aw==" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="#2ec9f0"/></svg>
+  <span>تابعنا على Instagram<small dir="ltr">@masarengineer360</small></span>
+ </a>
+
+ <div class="qr" id="qr"><div><svg version="1.1" viewBox="0 0 39 39" xmlns="http://www.w3.org/2000/svg"><path fill="#050b1a" d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM11,1H12V2H11zM13,1H14V2H13zM16,1H17V2H16zM18,1H19V2H18zM20,1H21V2H20zM21,1H22V2H21zM25,1H26V2H25zM26,1H27V2H26zM28,1H29V2H28zM31,1H32V2H31zM32,1H33V2H32zM33,1H34V2H33zM34,1H35V2H34zM35,1H36V2H35zM36,1H37V2H36zM37,1H38V2H37zM1,2H2V3H1zM7,2H8V3H7zM9,2H10V3H9zM10,2H11V3H10zM11,2H12V3H11zM13,2H14V3H13zM15,2H16V3H15zM17,2H18V3H17zM18,2H19V3H18zM21,2H22V3H21zM23,2H24V3H23zM27,2H28V3H27zM29,2H30V3H29zM31,2H32V3H31zM37,2H38V3H37zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM9,3H10V4H9zM11,3H12V4H11zM12,3H13V4H12zM13,3H14V4H13zM15,3H16V4H15zM22,3H23V4H22zM23,3H24V4H23zM28,3H29V4H28zM29,3H30V4H29zM31,3H32V4H31zM33,3H34V4H33zM34,3H35V4H34zM35,3H36V4H35zM37,3H38V4H37zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM10,4H11V5H10zM12,4H13V5H12zM16,4H17V5H16zM18,4H19V5H18zM21,4H22V5H21zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM25,4H26V5H25zM26,4H27V5H26zM28,4H29V5H28zM31,4H32V5H31zM33,4H34V5H33zM34,4H35V5H34zM35,4H36V5H35zM37,4H38V5H37zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM11,5H12V6H11zM13,5H14V6H13zM17,5H18V6H17zM18,5H19V6H18zM19,5H20V6H19zM20,5H21V6H20zM21,5H22V6H21zM24,5H25V6H24zM29,5H30V6H29zM31,5H32V6H31zM33,5H34V6H33zM34,5H35V6H34zM35,5H36V6H35zM37,5H38V6H37zM1,6H2V7H1zM7,6H8V7H7zM10,6H11V7H10zM12,6H13V7H12zM14,6H15V7H14zM15,6H16V7H15zM17,6H18V7H17zM18,6H19V7H18zM23,6H24V7H23zM26,6H27V7H26zM29,6H30V7H29zM31,6H32V7H31zM37,6H38V7H37zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM25,7H26V8H25zM27,7H28V8H27zM29,7H30V8H29zM31,7H32V8H31zM32,7H33V8H32zM33,7H34V8H33zM34,7H35V8H34zM35,7H36V8H35zM36,7H37V8H36zM37,7H38V8H37zM9,8H10V9H9zM11,8H12V9H11zM12,8H13V9H12zM14,8H15V9H14zM15,8H16V9H15zM16,8H17V9H16zM18,8H19V9H18zM19,8H20V9H19zM20,8H21V9H20zM21,8H22V9H21zM23,8H24V9H23zM24,8H25V9H24zM28,8H29V9H28zM1,9H2V10H1zM7,9H8V10H7zM9,9H10V10H9zM10,9H11V10H10zM17,9H18V10H17zM20,9H21V10H20zM22,9H23V10H22zM24,9H25V10H24zM26,9H27V10H26zM27,9H28V10H27zM28,9H29V10H28zM30,9H31V10H30zM31,9H32V10H31zM34,9H35V10H34zM35,9H36V10H35zM36,9H37V10H36zM1,10H2V11H1zM2,10H3V11H2zM3,10H4V11H3zM5,10H6V11H5zM9,10H10V11H9zM10,10H11V11H10zM12,10H13V11H12zM13,10H14V11H13zM17,10H18V11H17zM18,10H19V11H18zM19,10H20V11H19zM22,10H23V11H22zM23,10H24V11H23zM24,10H25V11H24zM25,10H26V11H25zM28,10H29V11H28zM30,10H31V11H30zM32,10H33V11H32zM33,10H34V11H33zM34,10H35V11H34zM35,10H36V11H35zM36,10H37V11H36zM1,11H2V12H1zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM5,11H6V12H5zM7,11H8V12H7zM8,11H9V12H8zM10,11H11V12H10zM11,11H12V12H11zM12,11H13V12H12zM13,11H14V12H13zM16,11H17V12H16zM17,11H18V12H17zM19,11H20V12H19zM20,11H21V12H20zM23,11H24V12H23zM28,11H29V12H28zM29,11H30V12H29zM30,11H31V12H30zM31,11H32V12H31zM32,11H33V12H32zM35,11H36V12H35zM36,11H37V12H36zM37,11H38V12H37zM2,12H3V13H2zM3,12H4V13H3zM4,12H5V13H4zM10,12H11V13H10zM11,12H12V13H11zM14,12H15V13H14zM15,12H16V13H15zM20,12H21V13H20zM21,12H22V13H21zM23,12H24V13H23zM24,12H25V13H24zM27,12H28V13H27zM29,12H30V13H29zM30,12H31V13H30zM33,12H34V13H33zM34,12H35V13H34zM37,12H38V13H37zM2,13H3V14H2zM3,13H4V14H3zM4,13H5V14H4zM5,13H6V14H5zM6,13H7V14H6zM7,13H8V14H7zM9,13H10V14H9zM11,13H12V14H11zM13,13H14V14H13zM15,13H16V14H15zM16,13H17V14H16zM21,13H22V14H21zM24,13H25V14H24zM25,13H26V14H25zM28,13H29V14H28zM31,13H32V14H31zM37,13H38V14H37zM1,14H2V15H1zM5,14H6V15H5zM8,14H9V15H8zM9,14H10V15H9zM10,14H11V15H10zM11,14H12V15H11zM13,14H14V15H13zM14,14H15V15H14zM16,14H17V15H16zM19,14H20V15H19zM20,14H21V15H20zM21,14H22V15H21zM22,14H23V15H22zM24,14H25V15H24zM28,14H29V15H28zM29,14H30V15H29zM30,14H31V15H30zM32,14H33V15H32zM34,14H35V15H34zM36,14H37V15H36zM2,15H3V16H2zM5,15H6V16H5zM6,15H7V16H6zM7,15H8V16H7zM9,15H10V16H9zM13,15H14V16H13zM14,15H15V16H14zM15,15H16V16H15zM16,15H17V16H16zM19,15H20V16H19zM21,15H22V16H21zM23,15H24V16H23zM26,15H27V16H26zM27,15H28V16H27zM28,15H29V16H28zM30,15H31V16H30zM31,15H32V16H31zM32,15H33V16H32zM33,15H34V16H33zM34,15H35V16H34zM36,15H37V16H36zM37,15H38V16H37zM3,16H4V17H3zM5,16H6V17H5zM6,16H7V17H6zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM12,16H13V17H12zM13,16H14V17H13zM14,16H15V17H14zM16,16H17V17H16zM22,16H23V17H22zM23,16H24V17H23zM24,16H25V17H24zM25,16H26V17H25zM27,16H28V17H27zM28,16H29V17H28zM30,16H31V17H30zM31,16H32V17H31zM32,16H33V17H32zM34,16H35V17H34zM35,16H36V17H35zM36,16H37V17H36zM1,17H2V18H1zM2,17H3V18H2zM3,17H4V18H3zM4,17H5V18H4zM5,17H6V18H5zM7,17H8V18H7zM13,17H14V18H13zM15,17H16V18H15zM16,17H17V18H16zM19,17H20V18H19zM21,17H22V18H21zM22,17H23V18H22zM23,17H24V18H23zM26,17H27V18H26zM27,17H28V18H27zM30,17H31V18H30zM31,17H32V18H31zM32,17H33V18H32zM33,17H34V18H33zM35,17H36V18H35zM36,17H37V18H36zM37,17H38V18H37zM4,18H5V19H4zM6,18H7V19H6zM10,18H11V19H10zM13,18H14V19H13zM17,18H18V19H17zM18,18H19V19H18zM22,18H23V19H22zM24,18H25V19H24zM28,18H29V19H28zM29,18H30V19H29zM30,18H31V19H30zM31,18H32V19H31zM36,18H37V19H36zM1,19H2V20H1zM2,19H3V20H2zM3,19H4V20H3zM4,19H5V20H4zM6,19H7V20H6zM7,19H8V20H7zM8,19H9V20H8zM9,19H10V20H9zM12,19H13V20H12zM17,19H18V20H17zM20,19H21V20H20zM22,19H23V20H22zM24,19H25V20H24zM28,19H29V20H28zM29,19H30V20H29zM31,19H32V20H31zM34,19H35V20H34zM35,19H36V20H35zM37,19H38V20H37zM4,20H5V21H4zM5,20H6V21H5zM10,20H11V21H10zM11,20H12V21H11zM13,20H14V21H13zM14,20H15V21H14zM16,20H17V21H16zM17,20H18V21H17zM19,20H20V21H19zM23,20H24V21H23zM25,20H26V21H25zM27,20H28V21H27zM30,20H31V21H30zM32,20H33V21H32zM34,20H35V21H34zM37,20H38V21H37zM1,21H2V22H1zM2,21H3V22H2zM3,21H4V22H3zM4,21H5V22H4zM6,21H7V22H6zM7,21H8V22H7zM10,21H11V22H10zM15,21H16V22H15zM17,21H18V22H17zM18,21H19V22H18zM23,21H24V22H23zM25,21H26V22H25zM26,21H27V22H26zM27,21H28V22H27zM30,21H31V22H30zM31,21H32V22H31zM33,21H34V22H33zM35,21H36V22H35zM4,22H5V23H4zM5,22H6V23H5zM6,22H7V23H6zM8,22H9V23H8zM9,22H10V23H9zM10,22H11V23H10zM12,22H13V23H12zM13,22H14V23H13zM15,22H16V23H15zM16,22H17V23H16zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM23,22H24V23H23zM24,22H25V23H24zM28,22H29V23H28zM30,22H31V23H30zM33,22H34V23H33zM35,22H36V23H35zM2,23H3V24H2zM3,23H4V24H3zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM10,23H11V24H10zM11,23H12V24H11zM12,23H13V24H12zM14,23H15V24H14zM16,23H17V24H16zM17,23H18V24H17zM18,23H19V24H18zM22,23H23V24H22zM25,23H26V24H25zM27,23H28V24H27zM28,23H29V24H28zM29,23H30V24H29zM32,23H33V24H32zM33,23H34V24H33zM34,23H35V24H34zM36,23H37V24H36zM37,23H38V24H37zM3,24H4V25H3zM4,24H5V25H4zM6,24H7V25H6zM10,24H11V25H10zM13,24H14V25H13zM14,24H15V25H14zM16,24H17V25H16zM18,24H19V25H18zM19,24H20V25H19zM20,24H21V25H20zM23,24H24V25H23zM24,24H25V25H24zM27,24H28V25H27zM32,24H33V25H32zM33,24H34V25H33zM34,24H35V25H34zM36,24H37V25H36zM2,25H3V26H2zM7,25H8V26H7zM11,25H12V26H11zM14,25H15V26H14zM15,25H16V26H15zM16,25H17V26H16zM18,25H19V26H18zM20,25H21V26H20zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM25,25H26V26H25zM26,25H27V26H26zM31,25H32V26H31zM33,25H34V26H33zM1,26H2V27H1zM4,26H5V27H4zM5,26H6V27H5zM6,26H7V27H6zM8,26H9V27H8zM12,26H13V27H12zM15,26H16V27H15zM19,26H20V27H19zM21,26H22V27H21zM23,26H24V27H23zM24,26H25V27H24zM27,26H28V27H27zM28,26H29V27H28zM29,26H30V27H29zM30,26H31V27H30zM31,26H32V27H31zM32,26H33V27H32zM35,26H36V27H35zM1,27H2V28H1zM4,27H5V28H4zM7,27H8V28H7zM9,27H10V28H9zM12,27H13V28H12zM13,27H14V28H13zM16,27H17V28H16zM17,27H18V28H17zM20,27H21V28H20zM22,27H23V28H22zM25,27H26V28H25zM26,27H27V28H26zM28,27H29V28H28zM29,27H30V28H29zM30,27H31V28H30zM31,27H32V28H31zM32,27H33V28H32zM34,27H35V28H34zM36,27H37V28H36zM37,27H38V28H37zM1,28H2V29H1zM4,28H5V29H4zM8,28H9V29H8zM9,28H10V29H9zM11,28H12V29H11zM12,28H13V29H12zM14,28H15V29H14zM15,28H16V29H15zM17,28H18V29H17zM20,28H21V29H20zM25,28H26V29H25zM27,28H28V29H27zM28,28H29V29H28zM30,28H31V29H30zM32,28H33V29H32zM35,28H36V29H35zM37,28H38V29H37zM1,29H2V30H1zM3,29H4V30H3zM5,29H6V30H5zM7,29H8V30H7zM11,29H12V30H11zM12,29H13V30H12zM13,29H14V30H13zM14,29H15V30H14zM15,29H16V30H15zM16,29H17V30H16zM17,29H18V30H17zM18,29H19V30H18zM20,29H21V30H20zM21,29H22V30H21zM23,29H24V30H23zM25,29H26V30H25zM26,29H27V30H26zM27,29H28V30H27zM28,29H29V30H28zM29,29H30V30H29zM30,29H31V30H30zM31,29H32V30H31zM32,29H33V30H32zM33,29H34V30H33zM35,29H36V30H35zM36,29H37V30H36zM37,29H38V30H37zM9,30H10V31H9zM12,30H13V31H12zM15,30H16V31H15zM16,30H17V31H16zM19,30H20V31H19zM20,30H21V31H20zM21,30H22V31H21zM22,30H23V31H22zM23,30H24V31H23zM24,30H25V31H24zM25,30H26V31H25zM29,30H30V31H29zM33,30H34V31H33zM36,30H37V31H36zM1,31H2V32H1zM2,31H3V32H2zM3,31H4V32H3zM4,31H5V32H4zM5,31H6V32H5zM6,31H7V32H6zM7,31H8V32H7zM12,31H13V32H12zM13,31H14V32H13zM14,31H15V32H14zM15,31H16V32H15zM16,31H17V32H16zM17,31H18V32H17zM18,31H19V32H18zM19,31H20V32H19zM20,31H21V32H20zM24,31H25V32H24zM29,31H30V32H29zM31,31H32V32H31zM33,31H34V32H33zM36,31H37V32H36zM37,31H38V32H37zM1,32H2V33H1zM7,32H8V33H7zM16,32H17V33H16zM22,32H23V33H22zM27,32H28V33H27zM28,32H29V33H28zM29,32H30V33H29zM33,32H34V33H33zM37,32H38V33H37zM1,33H2V34H1zM3,33H4V34H3zM4,33H5V34H4zM5,33H6V34H5zM7,33H8V34H7zM10,33H11V34H10zM12,33H13V34H12zM13,33H14V34H13zM14,33H15V34H14zM16,33H17V34H16zM19,33H20V34H19zM21,33H22V34H21zM22,33H23V34H22zM23,33H24V34H23zM24,33H25V34H24zM27,33H28V34H27zM28,33H29V34H28zM29,33H30V34H29zM30,33H31V34H30zM31,33H32V34H31zM32,33H33V34H32zM33,33H34V34H33zM35,33H36V34H35zM37,33H38V34H37zM1,34H2V35H1zM3,34H4V35H3zM4,34H5V35H4zM5,34H6V35H5zM7,34H8V35H7zM10,34H11V35H10zM12,34H13V35H12zM14,34H15V35H14zM21,34H22V35H21zM23,34H24V35H23zM24,34H25V35H24zM25,34H26V35H25zM31,34H32V35H31zM34,34H35V35H34zM37,34H38V35H37zM1,35H2V36H1zM3,35H4V36H3zM4,35H5V36H4zM5,35H6V36H5zM7,35H8V36H7zM12,35H13V36H12zM13,35H14V36H13zM15,35H16V36H15zM21,35H22V36H21zM25,35H26V36H25zM29,35H30V36H29zM36,35H37V36H36zM37,35H38V36H37zM1,36H2V37H1zM7,36H8V37H7zM12,36H13V37H12zM13,36H14V37H13zM14,36H15V37H14zM16,36H17V37H16zM17,36H18V37H17zM23,36H24V37H23zM24,36H25V37H24zM25,36H26V37H25zM27,36H28V37H27zM29,36H30V37H29zM30,36H31V37H30zM31,36H32V37H31zM33,36H34V37H33zM34,36H35V37H34zM37,36H38V37H37zM1,37H2V38H1zM2,37H3V38H2zM3,37H4V38H3zM4,37H5V38H4zM5,37H6V38H5zM6,37H7V38H6zM7,37H8V38H7zM9,37H10V38H9zM10,37H11V38H10zM12,37H13V38H12zM13,37H14V38H13zM15,37H16V38H15zM20,37H21V38H20zM21,37H22V38H21zM25,37H26V38H25zM29,37H30V38H29zM30,37H31V38H30zM31,37H32V38H31zM32,37H33V38H32zM34,37H35V38H34zM35,37H36V38H35zM37,37H38V38H37z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg></div><p>امسح الباركود لمتابعة حسابنا</p></div>
+ </div>
+
+ <div class="view" id="v-path" aria-live="polite"></div>
+
+ <footer>MASAR ENGINEER 360° · <span>من المعرفة إلى الاحتراف</span></footer>
+</main>
+<div class="mask" id="mask" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="modal" id="modal"></div></div>
+<canvas id="fx"></canvas>
+<script>
+{
+ const icons={st:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',gr:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/>'};
+ const IGU='https://www.instagram.com/masarengineer360?gwpx=MW9uZTgxemRveWZ0aw==';
+ const specs=[{n:'اتصالات',live:1},{n:'مدني'},{n:'معماري'},{n:'كهرباء'},{n:'ميكانيك'},{n:'حاسبات وبرمجيات'},{n:'كيمياوي'},{n:'نفط'},{n:'ميكاترونكس'}];
+ const mods=[
+  ['Fiber Optics','أساسيات الألياف الضوئية','تفهم كيف ينتقل الضوء داخل الليف وليش هو أساس شبكات اليوم.',['تركيب الليف: Core و Cladding و Coating','الفرق بين Single-mode و Multi-mode','أنواع الموصلات SC و LC و APC/UPC','التوهين والفقد وأسبابه']],
+  ['FTTH','شبكات الألياف للمنازل','تتعلم معمارية الشبكة من المقسم لحد بيت المشترك.',['مكونات الشبكة: OLT و ODN و Splitter و ONT','تقنية GPON وطريقة عملها','حساب الـ Power Budget','قراءة مخططات التصميم والتنفيذ']],
+  ['Fusion Splicing','لحام الألياف الضوئية','تدريب عملي على أهم مهارة بالميدان.',['تحضير الليف: Stripping و Cleaning و Cleaving','تشغيل جهاز اللحام وضبطه','قيم الفقد المقبولة باللحام','ترتيب اللحامات داخل الـ Closure']],
+  ['OTDR','الفحص والقياس','تعرف تفحص الخط وتحدد مكان العطل بدقة.',['مبدأ عمل جهاز OTDR','قراءة المنحنى وتمييز الأحداث Events','تحديد مسافة العطل ونوعه','الفحص بالـ Power Meter و Light Source']],
+  ['QC / QA','الجودة والاستلام','تشتغل حسب المعايير اللي تطلبها الشركات.',['معايير استلام الشبكة','توثيق القياسات وكتابة تقارير الفحص','أخطاء التنفيذ الشائعة وتجنبها','السلامة المهنية بالموقع']]];
+ const data={
+  st:{stt:'STUDENT PATH',title:'مسار الطالب',sub:'ابدأ مبكراً وخلّي خطوتك قبل غيرك',rank:'مهندس تحت التأسيس',lvl:'LEVEL 1',pct:30,
+   modal:{em:'🚀',h:'أهلاً <span>يا مهندس المستقبل!</span>',p:'أنت بالمرحلة الأهم: هسه تبني الأساس اللي يميزك بعد التخرج.',li:[['مستواك','تأسيس'],['هدفك','مهارة عملية قبل التخرج'],['خطوتك الأولى','اختر تخصصك']],btn:'اختر تخصصك'},
+   steps:[['افهم تخصصك ومجالاته','شنو الاتجاهات الموجودة وشنو المطلوب بالسوق'],['تعلّم برامج وأدوات تخصصك','المهارات اللي تطلبها الشركات فعلاً'],['تدريب صيفي ومشاريع عملية','طبّق اللي تدرسه على أرض الواقع'],['مشروع تخرج قوي وملف أعمال','وثّق شغلك حتى تتميز من أول مقابلة']]},
+  gr:{stt:'GRADUATE PATH',title:'مسار الخريج',sub:'من الشهادة إلى الميدان',rank:'مهندس خريج',lvl:'LEVEL 2',pct:60,
+   modal:{em:'🎓',h:'مبروك! <span>أنت مهندس خريج</span>',p:'خلصت الجزء الأكاديمي، وهسه وقت التحول من المعرفة إلى الاحتراف.',li:[['رتبتك','مهندس خريج'],['التقدم','60% نحو الاحتراف'],['الخطوة الجاية','اختر تخصصك']],btn:'اختر تخصصك'},
+   steps:[['تقييم مستواك','نحدد وين أنت ووين لازم توصل'],['احتراف أدوات تخصصك','البرامج والأجهزة اللي يشتغل بيها الميدان'],['تطبيق عملي على مشاريع حقيقية','خبرة ميدانية تنحسب بسيرتك الذاتية'],['معايير الجودة والسلامة','QC / QA و HSE حسب مجالك'],['جاهزية مهنية','سيرة ذاتية، مقابلات، وفرص عمل']]}
+ };
+ const $=id=>document.getElementById(id),home=$('v-home'),path=$('v-path'),stt=$('stt'),mask=$('mask'),modal=$('modal');
+ let last=null;
+ const chipsHTML=()=>specs.map((s,i)=>`<button class="chip${s.live?' live':''}" data-i="${i}">${s.n}<em>${s.live?'متاح':'قريباً'}</em></button>`).join('');
+ function bindChips(root){root.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{const s=specs[+c.dataset.i];s.live?go('telecom'):soon(s.n)}))}
+ function openModal(html,cls){modal.className='modal '+(cls||'');modal.innerHTML=html;mask.classList.add('on');(modal.querySelector('.btn')||modal).focus()}
+ function close(){mask.classList.remove('on')}
+ function soon(n){
+  openModal(`<div class="em">🚧</div><h3 id="mt">مسار ${n} <span>قريباً</span></h3><p>نرتب هسه محتوى هذا التخصص ووحداته العملية، وراح نعلن عنه أول بأول على حسابنا.</p>
+   <div class="bar"><i style="width:40%"></i></div><div class="lv"><span>تجهيز المحتوى</span><span>الإطلاق</span></div>
+   <a class="btn primary" style="margin-top:6px" href="${IGU}" target="_blank" rel="noopener">تابعنا حتى يوصلك الإعلان</a>
+   <button class="btn ghost" id="toT">تصفّح مسار الاتصالات</button>
+   <button class="back" id="cl" style="margin-top:10px">إغلاق</button>`,'soon');
+  $('toT').onclick=()=>{close();go('telecom')};$('cl').onclick=close;
+ }
+ function swap(html,label){
+  home.classList.remove('on');path.innerHTML=html;path.classList.remove('on');void path.offsetWidth;path.classList.add('on');
+  stt.textContent=label;window.scrollTo({top:0,behavior:'smooth'});$('back').onclick=()=>go('');
+ }
+ function show(k){
+  const d=data[k];
+  swap(`<button class="back" id="back">→ رجوع</button>
+   <div class="hero2"><div class="badge"><svg viewBox="0 0 24 24">${icons[k]}</svg></div><h1>${d.title}</h1><p>${d.sub}</p></div>
+   <section class="card pick-card"><h2>اختر تخصصك</h2><p>اضغط على تخصصك حتى تشوف تفاصيل مساره.</p><div class="chips" id="pchips">${chipsHTML()}</div></section>
+   <section class="card"><div class="rank"><div><small>رتبتك الحالية</small><b>${d.rank}</b></div><span class="pill">${d.lvl}</span></div>
+   <div class="bar"><i id="bar"></i></div><div class="lv"><span>تأسيس</span><span>خريج</span><span>محترف</span></div>
+   <ol class="steps">${d.steps.map((s,i)=>`<li data-n="${i+1}"><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}</ol></section>
+   <a class="btn ghost" href="https://iraqi-fiber-academy.abdulazizyassin909.workers.dev/" target="_blank" rel="noopener">ادخل المنصة ←</a>`,d.stt);
+  bindChips($('pchips'));
+  setTimeout(()=>{$('bar').style.width=d.pct+'%'},50);
+  const m=d.modal;
+  openModal(`<div class="em">${m.em}</div><h3 id="mt">${m.h}</h3><p>${m.p}</p><ul>${m.li.map(x=>`<li><b>${x[0]}:</b> ${x[1]}</li>`).join('')}</ul><button class="btn primary" id="ok" style="margin-top:12px">${m.btn}</button>`);
+  $('ok').onclick=close;
+  if(k==='gr')confetti();
+ }
+ function telecom(){
+  close();
+  swap(`<button class="back" id="back">→ رجوع</button>
+   <div class="spec-hero"><div class="badge"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/><path d="M2 9a14 14 0 0 1 20 0"/></svg></div>
+    <span class="live-tag">متاح الآن</span><h1>هندسة الاتصالات <span>· الشبكات الضوئية</span></h1>
+    <p>مسار عملي يوصلك من أساسيات الألياف الضوئية لحد تنفيذ وفحص شبكات FTTH حسب معايير الجودة.</p></div>
+   <div class="stats"><div><b>5</b><small>وحدات</small></div><div><b>عملي</b><small>تدريب بالأجهزة</small></div><div><b>للكل</b><small>من الصفر للاحتراف</small></div></div>
+   <h2 class="sec-t">وحدات المسار</h2>
+   ${mods.map((m,i)=>`<details class="mod"${i?'':' open'}><summary><i>0${i+1}</i><b>${m[1]}<small>${m[0]}</small></b></summary><div class="in"><p>${m[2]}</p><ul>${m[3].map(x=>`<li>${x}</li>`).join('')}</ul></div></details>`).join('')}
+   <h2 class="sec-t">لمن هذا المسار؟</h2>
+   <ul class="list"><li>طلاب الاتصالات والكهرباء والحاسبات</li><li>الخريجين اللي يريدون يدخلون مجال الشبكات الضوئية</li><li>الفنيين اللي يريدون يطورون مستواهم</li></ul>
+   <h2 class="sec-t">بعد المسار تگدر تشتغل</h2>
+   <ul class="list"><li>مهندس تنفيذ شبكات FTTH</li><li>مهندس فحص وقياس OTDR</li><li>مشرف جودة QC / QA بالمشاريع</li></ul>
+   <a class="btn primary" href="${IGU}" target="_blank" rel="noopener">سجّل اهتمامك عبر انستغرام</a>
+   <h2 class="sec-t">تخصصات ثانية</h2><div class="chips" id="pchips">${chipsHTML()}</div>`,'TELECOM · FTTH');
+  bindChips($('pchips'));
+ }
+ mask.addEventListener('click',e=>{if(e.target===mask)close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+ function showHome(){close();path.classList.remove('on');home.classList.remove('on');void home.offsetWidth;home.classList.add('on');stt.textContent='PATH RESTORED'}
+ function route(){const h=location.hash.slice(1);if(h===last)return;last=h;h==='student'?show('st'):h==='graduate'?show('gr'):h==='telecom'?telecom():showHome()}
+ function go(h){if(location.hash.slice(1)===h){last=null;route()}else location.hash=h}
+ window.addEventListener('hashchange',route);
+ document.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>go(b.dataset.k==='st'?'student':'graduate')));
+ $('go').addEventListener('click',()=>{const q=$('qr');q.classList.add('on');q.scrollIntoView({behavior:'smooth',block:'center'})});
+ const cv=$('fx'),cx=cv.getContext('2d');
+ function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  cv.width=innerWidth;cv.height=innerHeight;
+  const cols=['#2ec9f0','#2f8cff','#f5b942','#ffffff'];
+  const ps=Array.from({length:140},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,r:Math.random()*6,s:4+Math.random()*5,c:cols[Math.random()*4|0]}));
+  let t=0;(function f(){cx.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.1;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore()});if(++t<200)requestAnimationFrame(f);else cx.clearRect(0,0,cv.width,cv.height)})();
+ }
+ route();
+}
+</script>
+</body>
+</html>
